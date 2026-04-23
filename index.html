@@ -12,7 +12,7 @@
     <nav class="navbar">
         <div class="container">
             <span class="nav-title">نظام الاستبيان الأكاديمي</span>
-            <button class="btn-dashboard" onclick="goToDashboard()"><a href="dashboard.html">لوحة التحكم</a></button>
+            <button class="btn-dashboard"><a href="login.html" style="color: white; text-decoration: none;">لوحة التحكم</a></button>
         </div>
     </nav>
 
@@ -70,13 +70,19 @@
                 </div>
                 <div class="form-group" id="google-auth-container">
                     <label>حساب جوجل (Google Email): *</label>
+                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">يرجى تسجيل الدخول بجوجل أو كتابة بريدك الإلكتروني يدوياً أدناه:</p>
+                    
                     <div id="g_id_onload"
                          data-client_id="YOUR_GOOGLE_CLIENT_ID"
                          data-callback="handleCredentialResponse"
                          data-auto_prompt="false">
                     </div>
                     <div class="g_id_signin" data-type="standard"></div>
-                    <input type="hidden" name="googleEmail" id="googleEmail" required>
+                    
+                    <div style="margin-top: 15px;">
+                        <input type="email" name="googleEmail" id="googleEmail" placeholder="example@gmail.com" required 
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
                     <p id="email-display" style="margin-top: 10px; color: #27ae60; font-weight: bold; display: none;"></p>
                 </div>
             </div>
@@ -235,20 +241,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>الغرض من الاستخدام / Purpose of use:</label>
+                    <label>غرض الاستخدام (يمكن اختيار أكثر من واحد) / Purpose of use:</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="usagePurpose" value="وسائل التواصل"> وسائل التواصل / Social media
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="usagePurpose" value="الألعاب"> الألعاب / Gaming
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="usagePurpose" value="الدراسة"> الدراسة / Study
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="usagePurpose" value="المكالمات"> المكالمات / Calls
-                        </label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="دراسة"> دراسة / Study</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="تواصل اجتماعي"> تواصل اجتماعي / Social Media</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="ألعاب"> ألعاب / Games</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="ترفيه"> ترفيه / Entertainment</label>
                     </div>
                 </div>
             </div>
@@ -259,7 +257,7 @@
                 <p class="section-subtitle">Section 3: Neck Pain</p>
 
                 <div class="form-group">
-                    <label>هل تعاني من آلام الرقبة؟ / Do you suffer from neck pain?</label>
+                    <label>هل تعاني من آلام في الرقبة؟ / Do you have neck pain?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="neckPain" value="نعم"> نعم / Yes
@@ -271,43 +269,40 @@
                 </div>
 
                 <div class="form-group">
-                    <label>مدة الألم / Duration of pain:</label>
+                    <label>مدة الألم (إن وجد) / Pain duration:</label>
+                    <select name="painDuration">
+                        <option value="">اختر المدة</option>
+                        <option value="أقل من شهر">أقل من شهر / Less than a month</option>
+                        <option value="1-3 أشهر">1-3 أشهر / 1-3 months</option>
+                        <option value="3-6 أشهر">3-6 أشهر / 3-6 months</option>
+                        <option value="أكثر من 6 أشهر">أكثر من 6 أشهر / More than 6 months</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>شدة الألم (0-10) / Pain severity:</label>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span>0 (لا يوجد)</span>
+                        <input type="range" name="painSeverity" min="0" max="10" value="0" style="flex: 1;">
+                        <span>10 (شديد جداً)</span>
+                    </div>
+                    <p style="text-align: center; margin-top: 5px; font-weight: bold;">الدرجة المختارة: <span id="painValue">0</span></p>
+                </div>
+
+                <div class="form-group">
+                    <label>هل يؤثر الألم على نومك؟ / Does it impact sleep?</label>
                     <div class="radio-group">
                         <label class="radio-label">
-                            <input type="radio" name="painDuration" value="أقل من شهر"> أقل من شهر / Less than 1 month
+                            <input type="radio" name="sleepImpact" value="نعم"> نعم / Yes
                         </label>
                         <label class="radio-label">
-                            <input type="radio" name="painDuration" value="1-3 أشهر"> 1-3 أشهر / 1-3 months
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="painDuration" value="أكثر من 3 أشهر"> أكثر من 3 أشهر / More than 3 months
+                            <input type="radio" name="sleepImpact" value="لا"> لا / No
                         </label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>شدة الألم (1-10) / Pain severity (1-10):</label>
-                    <input type="range" name="painSeverity" min="1" max="10" value="5">
-                    <span id="painValue">5</span>
-                </div>
-
-                <div class="form-group">
-                    <label>تأثير الألم على النوم / Impact on sleep:</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="sleepImpact" value="لا يؤثر"> لا يؤثر / No impact
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="sleepImpact" value="يؤثر قليلاً"> يؤثر قليلاً / Slight impact
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="sleepImpact" value="يؤثر كثيراً"> يؤثر كثيراً / Major impact
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>الخدر والتنميل / Numbness and tingling:</label>
+                    <label>هل تشعر بتنميل في اليدين؟ / Numbness in hands?</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="numbness" value="نعم"> نعم / Yes
@@ -319,46 +314,29 @@
                 </div>
 
                 <div class="form-group">
-                    <label>موقع الألم / Pain location:</label>
+                    <label>مكان الألم (يمكن اختيار أكثر من واحد) / Pain location:</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="painLocation" value="الرقبة"> الرقبة / Neck
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="painLocation" value="الكتف"> الكتف / Shoulder
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="painLocation" value="الذراع"> الذراع / Arm
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="painLocation" value="الرأس"> الرأس / Head
-                        </label>
+                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="أعلى الرقبة"> أعلى الرقبة / Upper neck</label>
+                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="أسفل الرقبة"> أسفل الرقبة / Lower neck</label>
+                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="الكتفين"> الكتفين / Shoulders</label>
                     </div>
                 </div>
             </div>
 
-            <!-- Submit Buttons -->
-            <div class="form-actions">
-                <button type="submit" class="btn-primary">إرسال الاستبيان</button>
-                <button type="reset" class="btn-secondary">مسح النموذج</button>
-            </div>
+            <button type="submit" class="btn-submit">إرسال الاستبيان / Submit Survey</button>
         </form>
 
-        <!-- Thank You Message -->
-        <div class="thank-you-section" id="thankYouSection" style="display: none;">
-            <div class="thank-you-box">
-                <h2>شكراً لك! 🎉</h2>
-                <p>تم إرسال الاستبيان بنجاح</p>
-                <p class="thank-you-en">Thank you! Your survey has been submitted successfully.</p>
-                <button class="btn-primary" onclick="location.reload()">ملء استبيان جديد</button>
-            </div>
+        <!-- Thank You Section -->
+        <div id="thankYouSection" class="thank-you-box" style="display: none;">
+            <h2>شكراً لمشاركتك! 🎉</h2>
+            <p>تم حفظ بياناتك بنجاح للمساهمة في هذا البحث العلمي.</p>
+            <p style="color: #7f8c8d;">Your data has been saved successfully. Thank you for your contribution!</p>
+            <button onclick="location.reload()" class="btn-primary" style="margin-top: 20px;">تعبئة استبيان جديد</button>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 جامعة صنعاء - كلية الطب - قسم العلاج الطبيعي</p>
-        <p>جميع البيانات المدخلة محفوظة بشكل آمن وسري</p>
+        <p>© 2026 جميع الحقوق محفوظة - طلاب قسم العلاج الطبيعي - جامعة صنعاء</p>
     </footer>
 
     <script src="app.js"></script>

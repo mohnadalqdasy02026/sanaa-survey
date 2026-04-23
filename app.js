@@ -1,5 +1,5 @@
 // ============================================
-// نظام استبيان جامعة صنعاء - app.js (النسخة المفتوحة للجميع)
+// نظام استبيان جامعة صنعاء - app.js
 // ============================================
 
 function goToDashboard() {
@@ -8,17 +8,25 @@ function goToDashboard() {
 
 // دالة معالجة استجابة جوجل
 function handleCredentialResponse(response) {
-    const responsePayload = parseJwt(response.credential);
-    const email = responsePayload.email;
-    
-    // وضع الإيميل في الحقل المخفي وعرضه للمستخدم
-    document.getElementById('googleEmail').value = email;
-    const emailDisplay = document.getElementById('email-display');
-    emailDisplay.textContent = "تم سحب الإيميل بنجاح: " + email;
-    emailDisplay.style.display = 'block';
-    
-    // إخفاء زر تسجيل الدخول بعد النجاح
-    document.querySelector('.g_id_signin').style.display = 'none';
+    try {
+        const responsePayload = parseJwt(response.credential);
+        const email = responsePayload.email;
+        
+        // وضع الإيميل في الحقل وعرضه للمستخدم
+        const emailInput = document.getElementById('googleEmail');
+        emailInput.value = email;
+        emailInput.readOnly = true; // منع التعديل بعد السحب من جوجل
+        
+        const emailDisplay = document.getElementById('email-display');
+        emailDisplay.textContent = "تم سحب الإيميل بنجاح: " + email;
+        emailDisplay.style.display = 'block';
+        
+        // إخفاء زر تسجيل الدخول بعد النجاح
+        const googleBtn = document.querySelector('.g_id_signin');
+        if (googleBtn) googleBtn.style.display = 'none';
+    } catch (e) {
+        console.error("خطأ في معالجة بيانات جوجل:", e);
+    }
 }
 
 function parseJwt(token) {
@@ -33,13 +41,14 @@ function parseJwt(token) {
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById("surveyForm");
 
-    // التحقق إذا كان المستخدم قد ملأ الاستبيان مسبقاً من هذا المتصفح
+    // التحقق إذا كان المستخدم قد ملأ الاستبيان مسبقاً
     if (localStorage.getItem('surveySubmitted')) {
         document.getElementById('surveyForm').innerHTML = `
             <div class="thank-you-box" style="text-align:center; padding:50px; background:white; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
                 <h2 style="color:#2c3e50;">شكراً لك! 🎉</h2>
                 <p>لقد قمت بتعبئة هذا الاستبيان مسبقاً من هذا المتصفح.</p>
                 <p style="color:#7f8c8d;">Your survey has already been submitted from this browser.</p>
+                <button onclick="localStorage.removeItem('surveySubmitted'); location.reload();" class="btn-primary" style="margin-top:20px; padding: 10px 20px; cursor: pointer;">تعبئة استبيان آخر</button>
             </div>
         `;
     }
@@ -84,18 +93,18 @@ async function handleSurveySubmit(e) {
             body: JSON.stringify(formData)
         });
 
-        const result = await response.text();
-        console.log(result);
-
-        // حفظ حالة التعبئة في المتصفح لمنع التكرار
-        localStorage.setItem('surveySubmitted', 'true');
-
-        // إظهار رسالة النجاح
-        document.getElementById('surveyForm').style.display = 'none';
-        document.getElementById('thankYouSection').style.display = 'block';
+        if (response.ok) {
+            // حفظ حالة التعبئة
+            localStorage.setItem('surveySubmitted', 'true');
+            // إظهار رسالة النجاح
+            document.getElementById('surveyForm').style.display = 'none';
+            document.getElementById('thankYouSection').style.display = 'block';
+        } else {
+            alert("❌ حدث خطأ في السيرفر، يرجى المحاولة لاحقاً.");
+        }
     } catch (err) {
         console.error(err);
-        alert("❌ حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.");
+        alert("❌ حدث خطأ أثناء الإرسال، يرجى التأكد من اتصال الإنترنت.");
     }
 }
 
@@ -107,23 +116,13 @@ function validateForm() {
     }
 
     const requiredFields = [
-        'fullName', 'phoneNumber', 'googleEmail',
-        'gender', 'age', 'weight', 'height', 'studyHours',
-        'handDominance', 'smoking', 'exercise', 'chronicDiseases',
-        'phoneType', 'phoneSize', 'phoneUsageHours', 'holdingMethod',
-        'neckPosture', 'neckPain'
+        'fullName', 'phoneNumber', 'googleEmail'
     ];
 
-    const googleEmail = document.getElementById('googleEmail').value;
-    if (!googleEmail) {
-        alert("يرجى تسجيل الدخول باستخدام حساب جوجل أولاً لسحب البريد الإلكتروني تلقائياً");
-        return false;
-    }
-
     for (let field of requiredFields) {
-        let element = document.querySelector(`input[name="${field}"]:checked`) || document.querySelector(`[name="${field}"]`);
+        let element = document.getElementById(field) || document.querySelector(`[name="${field}"]`);
         if (!element || !element.value) {
-            alert("يرجى تعبئة جميع الحقول المطلوبة");
+            alert("يرجى تعبئة الحقول الأساسية (الاسم، الهاتف، البريد الإلكتروني)");
             return false;
         }
     }
