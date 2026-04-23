@@ -2,18 +2,19 @@ const express = require("express");
 const cors = require("cors");
 const ExcelJS = require("exceljs");
 const path = require("path");
+require("dotenv").config();
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-require("./db"); // الاتصال بقاعدة البيانات
+// الاتصال بقاعدة البيانات
+require("./db"); 
 
 const User = require("./models/User");
 const Survey = require("./models/Survey");
-
-app.use(express.static(__dirname));
 
 // خريطة ترجمة الحقول للعربية (بترتيب منظم للـ Excel)
 const fieldMap = {
@@ -75,7 +76,15 @@ app.post("/login", async (req, res) => {
         const { username, password } = req.body;
         const user = await User.findOne({ username: username.toLowerCase(), password });
         if (!user) return res.json({ success: false, message: "بيانات الدخول غير صحيحة" });
-        res.json({ success: true, user });
+        // إرجاع البيانات المطلوبة للواجهة الأمامية
+        res.json({ 
+            success: true, 
+            user: {
+                name: user.name,
+                username: user.username,
+                type: user.role
+            } 
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -102,6 +111,31 @@ app.get("/users-list", async (req, res) => {
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+});
+
+// مسار حذف مستخدم
+app.delete("/delete-user/:id", async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.send("تم حذف المستخدم بنجاح 🗑️");
+    } catch (err) {
+        res.status(500).send("خطأ في الحذف");
+    }
+});
+
+// مسار تحديث مستخدم
+app.put("/update-user/:id", async (req, res) => {
+    try {
+        const { name, username, password } = req.body;
+        const updateData = { name, username: username.toLowerCase() };
+        if (password && password !== "no_change") {
+            updateData.password = password;
+        }
+        await User.findByIdAndUpdate(req.params.id, updateData);
+        res.send("تم تحديث بيانات المستخدم بنجاح ✅");
+    } catch (err) {
+        res.status(500).send("خطأ في التحديث");
     }
 });
 
@@ -212,9 +246,10 @@ app.get("/download", async (req, res) => {
             { state: 'frozen', xSplit: 0, ySplit: 1, activePane: 'bottomRight', rightToLeft: true }
         ];
 
-        const filePath = path.join(__dirname, "Sanaa_University_Report.xlsx");
-        await workbook.xlsx.writeFile(filePath);
-        res.download(filePath);
+        // استخدام مسار مؤقت للملف لتجنب مشاكل الصلاحيات في Render
+        const tempFilePath = path.join("/tmp", "Sanaa_University_Report.xlsx");
+        await workbook.xlsx.writeFile(tempFilePath);
+        res.download(tempFilePath, "Sanaa_University_Report.xlsx");
     } catch (err) {
         console.error(err);
         res.status(500).send("خطأ في التصدير");
@@ -240,7 +275,15 @@ app.delete("/clear", async (req, res) => {
     }
 });
 
+// خدمة الملفات الساكنة
+app.use(express.static(path.join(__dirname)));
+
+// أي مسار غير معرف يوجه لـ index.html
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🔥 Server running on http://localhost:${PORT}`);
+    console.log("🔥 Server running on port " + PORT);
 });
