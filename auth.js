@@ -1,5 +1,5 @@
 // ============================================
-// نظام استبيان جامعة صنعاء - auth.js (النسخة الجديدة)
+// نظام استبيان جامعة صنعاء - auth.js
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -33,7 +33,7 @@ async function handleLogin(e) {
             const userData = {
                 name: data.user.name,
                 username: data.user.username,
-                type: data.user.role // 'admin' أو 'student'
+                type: data.user.type // 'admin' أو 'student'
             };
             localStorage.setItem('currentUser', JSON.stringify(userData));
             
@@ -58,7 +58,7 @@ async function handleLogin(e) {
 
 function logout() {
     localStorage.removeItem('currentUser');
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
 }
 
 function goToHome() {

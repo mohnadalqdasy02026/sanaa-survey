@@ -18,32 +18,113 @@ const Survey = require("./models/Survey");
 
 // خريطة ترجمة الحقول للعربية (بترتيب منظم للـ Excel)
 const fieldMap = {
-    fullName: "الاسم الكامل",
-    phoneNumber: "رقم الهاتف",
-    googleEmail: "حساب جوجل",
+    neckPainBefore: "هل عانيت من آلام في الرقبة أو الكتف من قبل؟",
     gender: "الجنس",
     age: "العمر",
     weight: "الوزن",
     height: "الطول",
     studyHours: "ساعات الدراسة",
-    handDominance: "اليد المستخدمة",
-    smoking: "التدخين",
-    exercise: "ممارسة الرياضة",
-    chronicDiseases: "أمراض مزمنة",
+    handDominance: "اليد المهيمنة",
+    smokingStatus: "سلوك التدخين",
+    exerciseStatus: "ممارسة الرياضة",
+    chronicDiseaseHistory: "تاريخ مرضي مزمن",
+    musculoskeletalDiseases: "أمراض عضلية هيكلية كامنة",
+    accidentHistory: "تاريخ التعرض لحادث عام",
+    specialization: "نوع التخصص",
     phoneType: "نوع الهاتف",
-    phoneSize: "حجم الهاتف",
-    phoneUsageHours: "ساعات استخدام الهاتف",
-    holdingMethod: "طريقة مسك الهاتف",
-    neckPosture: "وضعية الرقبة",
-    usagePurpose: "غرض الاستخدام",
-    neckPain: "ألم الرقبة",
-    painDuration: "مدة الألم",
-    painSeverity: "شدة الألم",
-    sleepImpact: "تأثير على النوم",
-    numbness: "تنميل",
-    painLocation: "مكان الألم",
+    phoneLength: "الطول (ملم)",
+    phoneWidth: "العرض (ملم)",
+    phoneThickness: "السمك (ملم)",
+    phoneWeight: "الوزن (جم)",
+    screenSize: "حجم الشاشة (بوصة)",
+    usageDurationTotal: "مدة الاستخدام (سنوات)",
+    usageDurationDaily: "مدة الاستخدام اليومي (ساعات)",
+    usagePeriod: "فترة الاستخدام",
+    restTime: "وقت الراحة",
+    mainHandUsed: "اليد الأساسية المستخدمة",
+    dataEntryMethod: "طريقة إدخال البيانات",
+    bodyPosture: "وضعية الجسم",
+    usagePurpose: "الغرض من الاستخدام",
+    otherDevicesUse: "استخدام أجهزة أخرى",
+    otherDevicesType: "نوع الأجهزة الأخرى",
+    otherDevicesDurationTotal: "مدة استخدام الأجهزة الأخرى (سنوات)",
+    otherDevicesDurationSingle: "مدة استخدام الأجهزة الأخرى (ساعات)",
+    otherDevicesDurationDaily: "مدة استخدام الأجهزة الأخرى يومياً (ساعات)",
+    neckPostureHabit: "وضعية الرقبة المعتادة",
+    associatedSymptoms: "الأعراض المرتبطة",
+    anxietyImpact: "القلق من المضاعفات",
+    painSeverityNow: "شدة الألم الحالية",
+    neckPainAndSleep: "ألم الرقبة والنوم",
+    numbnessAndRest: "وخز وتنميل أثناء الراحة",
+    symptomPersistence: "مدة استمرار الأعراض",
     timestamp: "تاريخ الإرسال"
 };
+
+// نظام مطابقة الأكواد الرقمية (Mapping)
+const codeMapping = {
+    neckPainBefore: { "نعم": 1, "لا": 2 },
+    gender: { "ذكر": 1, "أنثى": 2 },
+    handDominance: { "اليمنى": 1, "اليسرى": 2, "كلتا اليدين": 3 },
+    smokingStatus: { "مدخن حالي": 1, "مدخن سابق": 2, "لم أدخن أبداً": 3 },
+    exerciseStatus: { "أمارس الرياضة حالياً": 1, "كنت أمارس الرياضة سابقاً": 2, "لم أمارس الرياضة أبداً": 3 },
+    chronicDiseaseHistory: { "نعم": 1, "لا": 2 },
+    musculoskeletalDiseases: { "نعم": 1, "لا": 2 },
+    accidentHistory: { "نعم": 1, "لا": 2 },
+    specialization: { "الطب": 1, "المختبرات": 2, "التمريض": 3 },
+    phoneType: { "شاشة لمس": 1, "لوحة مفاتيح مع شاشة لمس": 2 },
+    usagePeriod: { "الصباح": 1, "الظهيرة": 2, "بعد الظهر": 3, "المساء": 4, "أوقات أخرى": 5 },
+    restTime: { "نعم": 1, "لا": 2 },
+    mainHandUsed: { "اليد اليمنى فقط": 1, "اليد اليسرى فقط": 2, "كلتا اليدين": 3 },
+    dataEntryMethod: { 
+        "الإمساك بكلتا اليدين مع الكتابة بإبهامي اليدين": 1, 
+        "الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليمنى": 2, 
+        "الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليسرى": 3, 
+        "الإمساك باليد اليمنى مع الكتابة بإبهام اليد اليمنى": 4 
+    },
+    bodyPosture: { "الجلوس": 1, "الوقوف": 2, "المشي": 3, "الاستلقاء": 4, "وضعيات أخرى": 5 },
+    usagePurpose: { 
+        "الدراسة": 1, "شبكات التواصل الاجتماعي": 2, "الأخبار": 3, 
+        "البحث عن البيانات": 4, "الترفيه": 5, "أغراض أخرى": 6 
+    },
+    otherDevicesUse: { "نعم": 1, "لا": 2 },
+    otherDevicesType: { "فأرة (ماوس)": 1, "حاسوب محمول (لابتوب)": 2, "حاسوب مكتبي (ديسكتوب)": 3, "جهاز لوحي (تابلت)": 4 },
+    neckPostureHabit: { "0 درجة": 1, "15 درجة": 2, "30 درجة": 3, "45 درجة": 4, "60 درجة": 5 },
+    associatedSymptoms: { 
+        "ألم في الرقبة": 1, "ألم في الذراع": 2, "صداع": 3, "ألم في الظهر": 4, 
+        "ألم في الكتف": 5, "تنميل في اليد": 6, "تيبس في الرقبة": 7 
+    },
+    anxietyImpact: { "نعم": 1, "لا": 2 },
+    painSeverityNow: { 
+        "لا أشعر بأي ألم في الوقت الحالي": 1, 
+        "ألمي خفيف في الوقت الحالي": 2, 
+        "ألمي متوسط في الوقت الحالي": 3, 
+        "ألمي شديد في الوقت الحالي": 4, 
+        "ألمي هو أسوأ ما يمكن تخيله في الوقت الحالي": 5 
+    },
+    neckPainAndSleep: { 
+        "لا ينزعج نومي أبداً بسبب الألم": 1, 
+        "ينزعج نومي أحياناً بسبب الألم": 2, 
+        "ينزعج نومي بانتظام بسبب الألم": 3, 
+        "بسبب الألم، أنام أقل من 5 ساعات في المجمل": 4, 
+        "بسبب الألم، أنام أقل من ساعتين في المجمل": 5 
+    },
+    numbnessAndRest: { 
+        "لا أعاني من وخز أو تنميل في الليل": 1, 
+        "أعاني من وخز أو تنميل عرضي في الليل": 2, 
+        "ينزعج نومي بانتظام بسبب الوخز أو التنميل": 3, 
+        "بسبب الوخز أو التنميل، أنام أقل من 5 ساعات في المجمل": 4, 
+        "بسبب الوخز أو التنميل، أنام أقل من ساعتين في المجمل": 5 
+    },
+    symptomPersistence: { 
+        "أشعر بأن رقبتي وذراعي طبيعيتان طوال اليوم": 1, 
+        "أعاني من أعراض في رقبتي أو ذراعي عند الاستيقاظ تستمر لأقل من ساعة": 2, 
+        "الأعراض تظهر وتختفي لفترة إجمالية تتراوح بين 1-4 ساعات": 3, 
+        "الأعراض تظهر وتختفي لفترة إجمالية تزيد عن 4 ساعات": 4, 
+        "الأعراض موجودة بشكل مستمر طوال اليوم": 5 
+    }
+};
+
+const fieldsRequiringCoding = Object.keys(codeMapping);
 
 // =======================
 // 🔐 إعداد المدير الافتراضي
@@ -61,6 +142,10 @@ const setupAdmin = async () => {
                 role: "admin"
             });
             console.log("✅ تم إنشاء حساب المدير");
+        } else {
+            // تحديث كلمة المرور في حال وجود المستخدم مسبقاً لضمان المطابقة
+            exists.password = adminPassword;
+            await exists.save();
         }
     } catch (err) {
         console.error("❌ خطأ في إعداد حساب المدير:", err);
@@ -76,7 +161,6 @@ app.post("/login", async (req, res) => {
         const { username, password } = req.body;
         const user = await User.findOne({ username: username.toLowerCase(), password });
         if (!user) return res.json({ success: false, message: "بيانات الدخول غير صحيحة" });
-        // إرجاع البيانات المطلوبة للواجهة الأمامية
         res.json({ 
             success: true, 
             user: {
@@ -91,7 +175,7 @@ app.post("/login", async (req, res) => {
 });
 
 // =======================
-// 👥 إدارة المستخدمين (للمدير فقط)
+// 👥 إدارة المستخدمين
 // =======================
 app.post("/add-user", async (req, res) => {
     try {
@@ -114,7 +198,6 @@ app.get("/users-list", async (req, res) => {
     }
 });
 
-// مسار حذف مستخدم
 app.delete("/delete-user/:id", async (req, res) => {
     try {
         await User.findByIdAndDelete(req.params.id);
@@ -124,7 +207,6 @@ app.delete("/delete-user/:id", async (req, res) => {
     }
 });
 
-// مسار تحديث مستخدم
 app.put("/update-user/:id", async (req, res) => {
     try {
         const { name, username, password } = req.body;
@@ -174,8 +256,44 @@ app.get("/data", async (req, res) => {
     }
 });
 
+// دالة تحويل القيمة إلى كود
+function convertToCode(fieldName, value) {
+    if (fieldsRequiringCoding.includes(fieldName) && codeMapping[fieldName]) {
+        if (typeof value === 'string' && value.includes(', ')) {
+            const values = value.split(', ');
+            const codes = values.map(v => codeMapping[fieldName][v.trim()] || '');
+            return codes.filter(c => c !== '').join(', ');
+        } else {
+            return codeMapping[fieldName][value] || '';
+        }
+    }
+    return value || '';
+}
+
+// دالة حساب التلخيص
+function calculateSummary(surveys, fieldName) {
+    const summary = {};
+    surveys.forEach(survey => {
+        const obj = survey.toObject();
+        const value = obj[fieldName];
+        if (value) {
+            if (typeof value === 'string' && value.includes(', ')) {
+                const values = value.split(', ');
+                values.forEach(v => {
+                    const code = codeMapping[fieldName] ? codeMapping[fieldName][v.trim()] : null;
+                    if (code) summary[code] = (summary[code] || 0) + 1;
+                });
+            } else {
+                const code = codeMapping[fieldName] ? codeMapping[fieldName][value] : null;
+                if (code) summary[code] = (summary[code] || 0) + 1;
+            }
+        }
+    });
+    return summary;
+}
+
 // =======================
-// 📥 تحميل Excel (RTL + تلوين + تصفية)
+// 📥 تحميل Excel (أكواد + تلخيص)
 // =======================
 app.get("/download", async (req, res) => {
     try {
@@ -187,66 +305,51 @@ app.get("/download", async (req, res) => {
             views: [{ rightToLeft: true }]
         });
 
-        // تعريف الأعمدة
         const columns = Object.values(fieldMap).map(header => ({
             header: header,
             key: header,
-            width: 20
+            width: 25
         }));
         worksheet.columns = columns;
 
-        // إضافة البيانات
         surveys.forEach(s => {
             const obj = s.toObject();
             const row = {};
             Object.keys(fieldMap).forEach(key => {
+                const arabicKey = fieldMap[key];
                 if (key === 'timestamp' && obj.createdAt) {
-                    row[fieldMap[key]] = new Date(obj.createdAt).toLocaleString('ar-EG');
+                    row[arabicKey] = new Date(obj.createdAt).toLocaleString('ar-EG');
                 } else {
-                    row[fieldMap[key]] = obj[key] || "";
+                    row[arabicKey] = convertToCode(key, obj[key]);
                 }
             });
             worksheet.addRow(row);
         });
 
-        // تنسيق الصف الأول (العناوين)
+        // تنسيق
         const headerRow = worksheet.getRow(1);
-        headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 12 };
-        headerRow.fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'FF2C3E50' }
-        };
-        headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+        headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2C3E50' } };
 
-        // تلوين الأعمدة بشكل تبادلي لتحسين القراءة
-        worksheet.eachRow((row, rowNumber) => {
-            if (rowNumber > 1) {
-                row.eachCell((cell, colNumber) => {
-                    cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    if (rowNumber % 2 === 0) {
-                        cell.fill = {
-                            type: 'pattern',
-                            pattern: 'solid',
-                            fgColor: { argb: 'FFF9F9F9' }
-                        };
-                    }
+        let currentRow = surveys.length + 3;
+        worksheet.getRow(currentRow - 1).getCell(1).value = "---- Summary ----";
+        worksheet.getRow(currentRow - 1).getCell(1).font = { bold: true, size: 14 };
+
+        fieldsRequiringCoding.forEach(fieldName => {
+            const arabicFieldName = fieldMap[fieldName];
+            const summary = calculateSummary(surveys, fieldName);
+            if (Object.keys(summary).length > 0) {
+                worksheet.getRow(currentRow).getCell(1).value = arabicFieldName + ":";
+                worksheet.getRow(currentRow).getCell(1).font = { bold: true };
+                currentRow++;
+                Object.keys(summary).sort((a, b) => a - b).forEach(code => {
+                    worksheet.getRow(currentRow).getCell(1).value = `${code} = ${summary[code]}`;
+                    currentRow++;
                 });
+                currentRow++;
             }
         });
 
-        // إضافة تصفية (Filter) لجميع الأعمدة
-        worksheet.autoFilter = {
-            from: { row: 1, column: 1 },
-            to: { row: 1, column: columns.length }
-        };
-
-        // تجميد الصف الأول
-        worksheet.views = [
-            { state: 'frozen', xSplit: 0, ySplit: 1, activePane: 'bottomRight', rightToLeft: true }
-        ];
-
-        // استخدام مسار مؤقت للملف لتجنب مشاكل الصلاحيات في Render
         const tempFilePath = path.join("/tmp", "Sanaa_University_Report.xlsx");
         await workbook.xlsx.writeFile(tempFilePath);
         res.download(tempFilePath, "Sanaa_University_Report.xlsx");
@@ -275,10 +378,7 @@ app.delete("/clear", async (req, res) => {
     }
 });
 
-// خدمة الملفات الساكنة
 app.use(express.static(path.join(__dirname)));
-
-// أي مسار غير معرف يوجه لـ index.html
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });

@@ -1,5 +1,5 @@
 // ============================================
-// نظام استبيان جامعة صنعاء - dashboard.js (الإصدار الاحترافي V2)
+// نظام استبيان جامعة صنعاء - dashboard.js
 // ============================================
 
 let currentUser = null;
@@ -19,15 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // إظهار التبويبات والصلاحيات
     if (isAdmin) {
-        document.getElementById('usersTabBtn').style.display = 'inline-block';
-        document.getElementById('dataTabBtn').style.display = 'inline-block';
-        document.getElementById('adminStats').style.display = 'block'; // إظهار إحصائيات المدير
+        const usersTabBtn = document.getElementById('usersTabBtn');
+        if (usersTabBtn) usersTabBtn.style.display = 'inline-block';
+        
+        const adminStats = document.getElementById('adminStats');
+        if (adminStats) adminStats.style.display = 'block';
         
         const addUserForm = document.getElementById('addUserForm');
         if (addUserForm) addUserForm.addEventListener('submit', handleAddUser);
     } else {
-        document.getElementById('dataTabBtn').style.display = 'inline-block';
-        document.getElementById('adminStats').style.display = 'none'; // إخفاء إحصائيات المستخدمين عن غير المدير
+        const adminStats = document.getElementById('adminStats');
+        if (adminStats) adminStats.style.display = 'none';
     }
 
     loadDashboardData();
@@ -45,9 +47,12 @@ function loadDashboardData() {
     fetch('/stats')
     .then(res => res.json())
     .then(stats => {
-        document.getElementById('totalSurveys').textContent = stats.surveys || 0;
-        if (isAdmin) {
-            document.getElementById('totalUsers').textContent = stats.users || 0;
+        const totalSurveys = document.getElementById('totalSurveys');
+        if (totalSurveys) totalSurveys.textContent = stats.surveys || 0;
+        
+        const totalUsers = document.getElementById('totalUsers');
+        if (isAdmin && totalUsers) {
+            totalUsers.textContent = stats.users || 0;
         }
     });
 
@@ -66,7 +71,7 @@ function loadDataTable(surveys) {
     if (!tbody) return;
     tbody.innerHTML = '';
     if (!surveys || surveys.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">لا توجد بيانات حالياً</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">لا توجد بيانات حالياً</td></tr>';
         return;
     }
     surveys.forEach((survey, index) => {
@@ -75,9 +80,8 @@ function loadDataTable(surveys) {
             <td>${index + 1}</td>
             <td>${survey["الجنس"] || '-'}</td>
             <td>${survey["العمر"] || '-'}</td>
-            <td>${survey["نوع الهاتف"] || '-'}</td>
-            <td>${survey["ساعات استخدام الهاتف"] || '-'}</td>
-            <td>${survey["ألم الرقبة"] || '-'}</td>
+            <td>${survey["نوع التخصص"] || '-'}</td>
+            <td>${survey["شدة الألم الحالية"] || '-'}</td>
             <td>${survey["تاريخ الإرسال"] || '-'}</td>
         `;
         tbody.appendChild(row);
@@ -174,8 +178,8 @@ function switchTab(tabName) {
         target.classList.add('active');
         target.style.display = 'block';
     }
-    if (event && event.currentTarget) {
-        event.currentTarget.classList.add('active');
+    if (window.event && window.event.currentTarget) {
+        window.event.currentTarget.classList.add('active');
     }
 }
 
@@ -190,5 +194,5 @@ function clearAllData() {
 
 function logout() {
     localStorage.removeItem('currentUser');
-    window.location.href = 'index.html';
+    window.location.href = 'login.html';
 }

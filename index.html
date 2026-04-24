@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استبيان جامعة صنعاء - كلية الطب</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -24,32 +23,31 @@
                 <p class="header-text">الجمهورية اليمنية</p>
                 <p class="header-text">وزارة التعليم العالي والبحث العلمي</p>
                 <h1 class="university-name">جامعة صنعاء</h1>
-                <p class="header-text">كلية الطب - قسم العلاج الطبيعي</p>
+                <p class="header-text">كلية الطب والعلوم الصحية - قسم العلاج الطبيعي</p>
                 <hr class="header-divider">
                 <p class="header-text-en">Republic of Yemen</p>
                 <p class="header-text-en">Ministry of Higher Education & Scientific Research</p>
                 <h1 class="university-name-en">Sana'a University</h1>
-                <p class="header-text-en">Faculty of Medicine - Department of Physiotherapy</p>
+                <p class="header-text-en">Faculty of Medicine & Health Sciences - Department of Physiotherapy</p>
             </div>
         </div>
 
         <!-- Study Title -->
         <div class="study-title">
-            <p class="title-ar">استبيان: حدوث آلام الرقبة وارتباطها باستخدام الهاتف الذكي بين طلاب جامعة صنعاء - كلية الطب وكلية العلوم الصحية بمدينة صنعاء، اليمن، 2026</p>
-            <p class="title-en">Incidence of Neck Pain and Its Association with Smart Phone Use among Sanaa University – Faculty of Medicine and Health Science Students in Sanaa, Yemen, 2026</p>
+            <p class="title-ar">استبيان: مدى انتشار آلام الرقبة وارتباطها باستخدام الهواتف الذكية بين طلاب جامعة صنعاء - كلية الطب والعلوم الصحية في صنعاء، اليمن، 2026</p>
         </div>
 
         <!-- Consent Section -->
         <div class="consent-section">
             <h2>الموافقة الرسمية</h2>
             <div class="consent-box">
-                <p>نحن طلاب العلاج الطبيعي بجامعة صنعاء، كلية الطب، قسم العلاج الطبيعي، نقوم بدراسة بعنوان "حدوث آلام الرقبة وارتباطها باستخدام الهاتف الذكي بين طلاب جامعة صنعاء - كلية الطب وكلية العلوم الصحية بمدينة صنعاء، اليمن، 2026". يرجى ملء هذا الاستبيان بصدق وأمانة. جميع البيانات المدخلة سرية وللأغراض الأكاديمية فقط.</p>
+                <p>نحن طلاب العلاج الطبيعي بكلية الطب في جامعة صنعاء، نقوم بإجراء دراسة بعنوان: "مدى انتشار آلام الرقبة وارتباطها باستخدام الهواتف الذكية بين طلاب جامعة الطبية في صنعاء، اليمن، 2025". أرجو منك التكرم بالإجابة على هذا الاستبيان كجزء من الدراسة. ستساعد هذه الدراسة في تحديد نسبة الأشخاص الذين يعانون من آلام الرقبة عند استخدام الهواتف الذكية. أضمن لك أن المعلومات المقدمة ستحفظ بسرية تامة ولن تُستخدم إلا للأغراض الأكاديمية.</p>
                 <div class="consent-options">
                     <label class="radio-label">
-                        <input type="radio" name="consent" value="yes" required> أوافق على المشاركة
+                        <input type="radio" name="consent" value="نعم" required> أوافق على المشاركة
                     </label>
                     <label class="radio-label">
-                        <input type="radio" name="consent" value="no" required> لا أوافق على المشاركة
+                        <input type="radio" name="consent" value="لا" required> لا أوافق على المشاركة
                     </label>
                 </div>
             </div>
@@ -57,280 +55,332 @@
 
         <!-- Survey Form -->
         <form id="surveyForm" class="survey-form">
-            <!-- User Identity Info -->
+            
+            <!-- Section 1: Demographic -->
             <div class="section">
-                <h2 class="section-title">بيانات المشارك (Identity Info)</h2>
+                <h2 class="section-title">القسم الأول: المتغيرات الاجتماعية والديموغرافية</h2>
+                
                 <div class="form-group">
-                    <label>الاسم الكامل (Full Name): *</label>
-                    <input type="text" name="fullName" placeholder="أدخل اسمك الثلاثي" required>
-                </div>
-                <div class="form-group">
-                    <label>رقم الهاتف (Phone Number): *</label>
-                    <input type="tel" name="phoneNumber" placeholder="7XXXXXXXX" required>
-                </div>
-                <div class="form-group" id="google-auth-container">
-                    <label>حساب جوجل (Google Email): *</label>
-                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">يرجى تسجيل الدخول بجوجل أو كتابة بريدك الإلكتروني يدوياً أدناه:</p>
-                    
-                    <div id="g_id_onload"
-                         data-client_id="YOUR_GOOGLE_CLIENT_ID"
-                         data-callback="handleCredentialResponse"
-                         data-auto_prompt="false">
-                    </div>
-                    <div class="g_id_signin" data-type="standard"></div>
-                    
-                    <div style="margin-top: 15px;">
-                        <input type="email" name="googleEmail" id="googleEmail" placeholder="example@gmail.com" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    </div>
-                    <p id="email-display" style="margin-top: 10px; color: #27ae60; font-weight: bold; display: none;"></p>
-                </div>
-            </div>
-
-            <!-- Section 1: Sociodemographic -->
-            <div class="section">
-                <h2 class="section-title">القسم الأول: المتغيرات الديموغرافية</h2>
-                <p class="section-subtitle">Section 1: Sociodemographic Variables</p>
-
-                <div class="form-group">
-                    <label>الجنس / Gender:</label>
+                    <label>هل عانيت من آلام في الرقبة أو الكتف من قبل؟</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="ذكر"> ذكر / Male
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="gender" value="أنثى"> أنثى / Female
-                        </label>
+                        <label class="radio-label"><input type="radio" name="neckPainBefore" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="neckPainBefore" value="لا"> لا</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>العمر (سنة) / Age (years):</label>
-                    <input type="number" name="age" min="15" max="60" placeholder="أدخل العمر">
+                    <label>الجنس:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="gender" value="ذكر"> ذكر</label>
+                        <label class="radio-label"><input type="radio" name="gender" value="أنثى"> أنثى</label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label>الوزن (كجم) / Weight (kg):</label>
+                    <label>العمر (سنوات):</label>
+                    <input type="number" name="age" placeholder="أدخل العمر">
+                </div>
+
+                <div class="form-group">
+                    <label>الوزن (كجم):</label>
                     <input type="number" name="weight" step="0.1" placeholder="أدخل الوزن">
                 </div>
 
                 <div class="form-group">
-                    <label>الطول (سم) / Height (cm):</label>
+                    <label>الطول (سم):</label>
                     <input type="number" name="height" step="0.1" placeholder="أدخل الطول">
                 </div>
 
                 <div class="form-group">
-                    <label>ساعات الدراسة يومياً / Daily study hours:</label>
+                    <label>ساعات الدراسة يومياً:</label>
                     <input type="number" name="studyHours" step="0.5" placeholder="أدخل عدد الساعات">
                 </div>
 
                 <div class="form-group">
-                    <label>السيطرة اليدوية / Hand dominance:</label>
+                    <label>اليد المهيمنة (المستخدمة بشكل أساسي):</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="handDominance" value="يمين"> يمين / Right
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="handDominance" value="يسار"> يسار / Left
-                        </label>
+                        <label class="radio-label"><input type="radio" name="handDominance" value="اليمنى"> اليمنى</label>
+                        <label class="radio-label"><input type="radio" name="handDominance" value="اليسرى"> اليسرى</label>
+                        <label class="radio-label"><input type="radio" name="handDominance" value="كلتا اليدين"> كلتا اليدين</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>التدخين / Smoking:</label>
+                    <label>سلوك التدخين:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="smoking" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="smoking" value="لا"> لا / No
-                        </label>
+                        <label class="radio-label"><input type="radio" name="smokingStatus" value="مدخن حالي"> مدخن حالي</label>
+                        <label class="radio-label"><input type="radio" name="smokingStatus" value="مدخن سابق"> مدخن سابق</label>
+                        <label class="radio-label"><input type="radio" name="smokingStatus" value="لم أدخن أبداً"> لم أدخن أبداً</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>التمارين الرياضية / Exercise:</label>
+                    <label>ممارسة الرياضة:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="exercise" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="exercise" value="لا"> لا / No
-                        </label>
+                        <label class="radio-label"><input type="radio" name="exerciseStatus" value="أمارس الرياضة حالياً"> أمارس الرياضة حالياً</label>
+                        <label class="radio-label"><input type="radio" name="exerciseStatus" value="كنت أمارس الرياضة سابقاً"> كنت أمارس الرياضة سابقاً</label>
+                        <label class="radio-label"><input type="radio" name="exerciseStatus" value="لم أمارس الرياضة أبداً"> لم أمارس الرياضة أبداً</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>أمراض مزمنة / Chronic diseases:</label>
+                    <label>تاريخ مرضي مزمن:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="chronicDiseases" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="chronicDiseases" value="لا"> لا / No
-                        </label>
+                        <label class="radio-label"><input type="radio" name="chronicDiseaseHistory" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="chronicDiseaseHistory" value="لا"> لا</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>أمراض عضلية هيكلية كامنة:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="musculoskeletalDiseases" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="musculoskeletalDiseases" value="لا"> لا</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>تاريخ التعرض لحادث عام:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="accidentHistory" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="accidentHistory" value="لا"> لا</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع التخصص:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="specialization" value="الطب"> الطب</label>
+                        <label class="radio-label"><input type="radio" name="specialization" value="المختبرات"> المختبرات</label>
+                        <label class="radio-label"><input type="radio" name="specialization" value="التمريض"> التمريض</label>
                     </div>
                 </div>
             </div>
 
             <!-- Section 2: Smartphone Usage -->
             <div class="section">
-                <h2 class="section-title">القسم الثاني: استخدام الهاتف الذكي</h2>
-                <p class="section-subtitle">Section 2: Smartphone Usage</p>
-
+                <h2 class="section-title">القسم الثاني: بيانات استخدام الهاتف الذكي المُبلغ عنها</h2>
+                
                 <div class="form-group">
-                    <label>نوع الهاتف / Phone type:</label>
-                    <select name="phoneType">
-                        <option value="">اختر نوع الهاتف</option>
-                        <option value="iPhone">iPhone</option>
-                        <option value="Samsung">Samsung</option>
-                        <option value="Huawei">Huawei</option>
-                        <option value="Xiaomi">Xiaomi</option>
-                        <option value="أخرى">أخرى / Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>حجم الهاتف / Phone size:</label>
+                    <label>النوع:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="phoneSize" value="صغير"> صغير (أقل من 4.5 بوصة) / Small
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="phoneSize" value="متوسط"> متوسط (4.5-5.5 بوصة) / Medium
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="phoneSize" value="كبير"> كبير (أكثر من 5.5 بوصة) / Large
-                        </label>
+                        <label class="radio-label"><input type="radio" name="phoneType" value="شاشة لمس"> شاشة لمس</label>
+                        <label class="radio-label"><input type="radio" name="phoneType" value="لوحة مفاتيح مع شاشة لمس"> لوحة مفاتيح مع شاشة لمس</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>ساعات استخدام الهاتف يومياً / Daily phone usage hours:</label>
-                    <input type="number" name="phoneUsageHours" step="0.5" placeholder="أدخل عدد الساعات">
+                    <label>الطول (ملم):</label>
+                    <input type="number" name="phoneLength" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>العرض (ملم):</label>
+                    <input type="number" name="phoneWidth" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>السمك (ملم):</label>
+                    <input type="number" name="phoneThickness" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>الوزن (جم):</label>
+                    <input type="number" name="phoneWeight" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label>حجم الشاشة (بوصة):</label>
+                    <input type="number" name="screenSize" step="0.1">
                 </div>
 
                 <div class="form-group">
-                    <label>طريقة الإمساك بالهاتف / Phone holding method:</label>
+                    <label>مدة الاستخدام منذ البداية وحتى الآن (سنوات):</label>
+                    <input type="number" name="usageDurationTotal" step="0.5">
+                </div>
+
+                <div class="form-group">
+                    <label>مدة الاستخدام في المرة الواحدة يومياً (ساعات):</label>
+                    <input type="number" name="usageDurationDaily" step="0.5">
+                </div>
+
+                <div class="form-group">
+                    <label>فترة الاستخدام:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="holdingMethod" value="باليد"> باليد / In hand
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="holdingMethod" value="على الطاولة"> على الطاولة / On table
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="holdingMethod" value="مختلط"> مختلط / Mixed
-                        </label>
+                        <label class="radio-label"><input type="radio" name="usagePeriod" value="الصباح"> الصباح</label>
+                        <label class="radio-label"><input type="radio" name="usagePeriod" value="الظهيرة"> الظهيرة</label>
+                        <label class="radio-label"><input type="radio" name="usagePeriod" value="بعد الظهر"> بعد الظهر</label>
+                        <label class="radio-label"><input type="radio" name="usagePeriod" value="المساء"> المساء</label>
+                        <label class="radio-label"><input type="radio" name="usagePeriod" value="أوقات أخرى"> أوقات أخرى (مثل قبل النوم)</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>وضعية الرقبة أثناء الاستخدام / Neck posture during use:</label>
+                    <label>وقت الراحة:</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="neckPosture" value="مستقيمة"> مستقيمة / Straight
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="neckPosture" value="منحنية للأسفل"> منحنية للأسفل / Bent down
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="neckPosture" value="منحنية للجانب"> منحنية للجانب / Bent sideways
-                        </label>
+                        <label class="radio-label"><input type="radio" name="restTime" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="restTime" value="لا"> لا</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>غرض الاستخدام (يمكن اختيار أكثر من واحد) / Purpose of use:</label>
+                    <label>اليد الأساسية المستخدمة:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="mainHandUsed" value="اليد اليمنى فقط"> اليد اليمنى فقط</label>
+                        <label class="radio-label"><input type="radio" name="mainHandUsed" value="اليد اليسرى فقط"> اليد اليسرى فقط</label>
+                        <label class="radio-label"><input type="radio" name="mainHandUsed" value="كلتا اليدين"> كلتا اليدين</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>طريقة إدخال البيانات (الكتابة):</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="dataEntryMethod" value="الإمساك بكلتا اليدين مع الكتابة بإبهامي اليدين"> الإمساك بكلتا اليدين مع الكتابة بإبهامي اليدين</label>
+                        <label class="radio-label"><input type="radio" name="dataEntryMethod" value="الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليمنى"> الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليمنى</label>
+                        <label class="radio-label"><input type="radio" name="dataEntryMethod" value="الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليسرى"> الإمساك بكلتا اليدين مع الكتابة بإبهام اليد اليسرى</label>
+                        <label class="radio-label"><input type="radio" name="dataEntryMethod" value="الإمساك باليد اليمنى مع الكتابة بإبهام اليد اليمنى"> الإمساك باليد اليمنى مع الكتابة بإبهام اليد اليمنى</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>وضعية الجسم أثناء الاستخدام:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="bodyPosture" value="الجلوس"> الجلوس</label>
+                        <label class="radio-label"><input type="radio" name="bodyPosture" value="الوقوف"> الوقوف</label>
+                        <label class="radio-label"><input type="radio" name="bodyPosture" value="المشي"> المشي</label>
+                        <label class="radio-label"><input type="radio" name="bodyPosture" value="الاستلقاء"> الاستلقاء</label>
+                        <label class="radio-label"><input type="radio" name="bodyPosture" value="وضعيات أخرى"> وضعيات أخرى</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>الغرض من الاستخدام:</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="دراسة"> دراسة / Study</label>
-                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="تواصل اجتماعي"> تواصل اجتماعي / Social Media</label>
-                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="ألعاب"> ألعاب / Games</label>
-                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="ترفيه"> ترفيه / Entertainment</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="الدراسة"> الدراسة</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="شبكات التواصل الاجتماعي"> شبكات التواصل الاجتماعي</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="الأخبار"> الأخبار</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="البحث عن البيانات"> البحث عن البيانات</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="الترفيه"> الترفيه</label>
+                        <label class="checkbox-label"><input type="checkbox" name="usagePurpose" value="أغراض أخرى"> أغراض أخرى (مثل اللعب)</label>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label>استخدام أجهزة أخرى:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="otherDevicesUse" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="otherDevicesUse" value="لا"> لا</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع الأجهزة الأخرى:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label"><input type="checkbox" name="otherDevicesType" value="فأرة (ماوس)"> فأرة (ماوس)</label>
+                        <label class="checkbox-label"><input type="checkbox" name="otherDevicesType" value="حاسوب محمول (لابتوب)"> حاسوب محمول (لابتوب)</label>
+                        <label class="checkbox-label"><input type="checkbox" name="otherDevicesType" value="حاسوب مكتبي (ديسكتوب)"> حاسوب مكتبي (ديسكتوب)</label>
+                        <label class="checkbox-label"><input type="checkbox" name="otherDevicesType" value="جهاز لوحي (تابلت)"> جهاز لوحي (تابلت)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>مدة استخدام الأجهزة الأخرى منذ البداية وحتى الآن (سنوات):</label>
+                    <input type="number" name="otherDevicesDurationTotal" step="0.5">
+                </div>
+                <div class="form-group">
+                    <label>مدة استخدام الأجهزة الأخرى في المرة الواحدة (ساعات):</label>
+                    <input type="number" name="otherDevicesDurationSingle" step="0.5">
+                </div>
+                <div class="form-group">
+                    <label>مدة استخدام الأجهزة الأخرى يومياً (ساعات):</label>
+                    <input type="number" name="otherDevicesDurationDaily" step="0.5">
                 </div>
             </div>
 
             <!-- Section 3: Neck Pain -->
             <div class="section">
                 <h2 class="section-title">القسم الثالث: آلام الرقبة</h2>
-                <p class="section-subtitle">Section 3: Neck Pain</p>
-
+                
                 <div class="form-group">
-                    <label>هل تعاني من آلام في الرقبة؟ / Do you have neck pain?</label>
+                    <label>ما هي وضعية رقبتك المعتادة أثناء استخدام الهاتف الذكي؟</label>
                     <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="neckPain" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="neckPain" value="لا"> لا / No
-                        </label>
+                        <label class="radio-label"><input type="radio" name="neckPostureHabit" value="0 درجة"> 0 درجة</label>
+                        <label class="radio-label"><input type="radio" name="neckPostureHabit" value="15 درجة"> 15 درجة</label>
+                        <label class="radio-label"><input type="radio" name="neckPostureHabit" value="30 درجة"> 30 درجة</label>
+                        <label class="radio-label"><input type="radio" name="neckPostureHabit" value="45 درجة"> 45 درجة</label>
+                        <label class="radio-label"><input type="radio" name="neckPostureHabit" value="60 درجة"> 60 درجة</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>مدة الألم (إن وجد) / Pain duration:</label>
-                    <select name="painDuration">
-                        <option value="">اختر المدة</option>
-                        <option value="أقل من شهر">أقل من شهر / Less than a month</option>
-                        <option value="1-3 أشهر">1-3 أشهر / 1-3 months</option>
-                        <option value="3-6 أشهر">3-6 أشهر / 3-6 months</option>
-                        <option value="أكثر من 6 أشهر">أكثر من 6 أشهر / More than 6 months</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>شدة الألم (0-10) / Pain severity:</label>
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <span>0 (لا يوجد)</span>
-                        <input type="range" name="painSeverity" min="0" max="10" value="0" style="flex: 1;">
-                        <span>10 (شديد جداً)</span>
-                    </div>
-                    <p style="text-align: center; margin-top: 5px; font-weight: bold;">الدرجة المختارة: <span id="painValue">0</span></p>
-                </div>
-
-                <div class="form-group">
-                    <label>هل يؤثر الألم على نومك؟ / Does it impact sleep?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="sleepImpact" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="sleepImpact" value="لا"> لا / No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>هل تشعر بتنميل في اليدين؟ / Numbness in hands?</label>
-                    <div class="radio-group">
-                        <label class="radio-label">
-                            <input type="radio" name="numbness" value="نعم"> نعم / Yes
-                        </label>
-                        <label class="radio-label">
-                            <input type="radio" name="numbness" value="لا"> لا / No
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>مكان الألم (يمكن اختيار أكثر من واحد) / Pain location:</label>
+                    <label>هل عانيت من أي من الأعراض التالية المرتبطة باستخدام الهاتف الذكي؟</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="أعلى الرقبة"> أعلى الرقبة / Upper neck</label>
-                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="أسفل الرقبة"> أسفل الرقبة / Lower neck</label>
-                        <label class="checkbox-label"><input type="checkbox" name="painLocation" value="الكتفين"> الكتفين / Shoulders</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="ألم في الرقبة"> ألم في الرقبة</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="ألم في الذراع"> ألم في الذراع</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="صداع"> صداع</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="ألم في الظهر"> ألم في الظهر</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="ألم في الكتف"> ألم في الكتف</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="تنميل في اليد"> تنميل في اليد</label>
+                        <label class="checkbox-label"><input type="checkbox" name="associatedSymptoms" value="تيبس في الرقبة"> تيبس في الرقبة</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>هل تشعر بالقلق إزاء المضاعفات طويلة المدى المرتبطة باستخدام الهاتف الذكي؟</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="anxietyImpact" value="نعم"> نعم</label>
+                        <label class="radio-label"><input type="radio" name="anxietyImpact" value="لا"> لا</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>شدة ألم الرقبة في الوقت الحالي:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="painSeverityNow" value="لا أشعر بأي ألم في الوقت الحالي"> لا أشعر بأي ألم في الوقت الحالي</label>
+                        <label class="radio-label"><input type="radio" name="painSeverityNow" value="ألمي خفيف في الوقت الحالي"> ألمي خفيف في الوقت الحالي</label>
+                        <label class="radio-label"><input type="radio" name="painSeverityNow" value="ألمي متوسط في الوقت الحالي"> ألمي متوسط في الوقت الحالي</label>
+                        <label class="radio-label"><input type="radio" name="painSeverityNow" value="ألمي شديد في الوقت الحالي"> ألمي شديد في الوقت الحالي</label>
+                        <label class="radio-label"><input type="radio" name="painSeverityNow" value="ألمي هو أسوأ ما يمكن تخيله في الوقت الحالي"> ألمي هو أسوأ ما يمكن تخيله في الوقت الحالي</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ألم الرقبة والنوم:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="neckPainAndSleep" value="لا ينزعج نومي أبداً بسبب الألم"> لا ينزعج نومي أبداً بسبب الألم</label>
+                        <label class="radio-label"><input type="radio" name="neckPainAndSleep" value="ينزعج نومي أحياناً بسبب الألم"> ينزعج نومي أحياناً بسبب الألم</label>
+                        <label class="radio-label"><input type="radio" name="neckPainAndSleep" value="ينزعج نومي بانتظام بسبب الألم"> ينزعج نومي بانتظام بسبب الألم</label>
+                        <label class="radio-label"><input type="radio" name="neckPainAndSleep" value="بسبب الألم، أنام أقل من 5 ساعات في المجمل"> بسبب الألم، أنام أقل من 5 ساعات في المجمل</label>
+                        <label class="radio-label"><input type="radio" name="neckPainAndSleep" value="بسبب الألم، أنام أقل من ساعتين في المجمل"> بسبب الألم، أنام أقل من ساعتين في المجمل</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>وخز وتنميل في الرقبة أو الكتف أثناء الراحة أو الحركة:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="numbnessAndRest" value="لا أعاني من وخز أو تنميل في الليل"> لا أعاني من وخز أو تنميل في الليل</label>
+                        <label class="radio-label"><input type="radio" name="numbnessAndRest" value="أعاني من وخز أو تنميل عرضي في الليل"> أعاني من وخز أو تنميل عرضي في الليل</label>
+                        <label class="radio-label"><input type="radio" name="numbnessAndRest" value="ينزعج نومي بانتظام بسبب الوخز أو التنميل"> ينزعج نومي بانتظام بسبب الوخز أو التنميل</label>
+                        <label class="radio-label"><input type="radio" name="numbnessAndRest" value="بسبب الوخز أو التنميل، أنام أقل من 5 ساعات في المجمل"> بسبب الوخز أو التنميل، أنام أقل من 5 ساعات في المجمل</label>
+                        <label class="radio-label"><input type="radio" name="numbnessAndRest" value="بسبب الوخز أو التنميل، أنام أقل من ساعتين في المجمل"> بسبب الوخز أو التنميل، أنام أقل من ساعتين في المجمل</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>مدة استمرار الأعراض:</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="symptomPersistence" value="أشعر بأن رقبتي وذراعي طبيعيتان طوال اليوم"> أشعر بأن رقبتي وذراعي طبيعيتان طوال اليوم</label>
+                        <label class="radio-label"><input type="radio" name="symptomPersistence" value="أعاني من أعراض في رقبتي أو ذراعي عند الاستيقاظ تستمر لأقل من ساعة"> أعاني من أعراض في رقبتي أو ذراعي عند الاستيقاظ تستمر لأقل من ساعة</label>
+                        <label class="radio-label"><input type="radio" name="symptomPersistence" value="الأعراض تظهر وتختفي لفترة إجمالية تتراوح بين 1-4 ساعات"> الأعراض تظهر وتختفي لفترة إجمالية تتراوح بين 1-4 ساعات</label>
+                        <label class="radio-label"><input type="radio" name="symptomPersistence" value="الأعراض تظهر وتختفي لفترة إجمالية تزيد عن 4 ساعات"> الأعراض تظهر وتختفي لفترة إجمالية تزيد عن 4 ساعات</label>
+                        <label class="radio-label"><input type="radio" name="symptomPersistence" value="الأعراض موجودة بشكل مستمر طوال اليوم"> الأعراض موجودة بشكل مستمر طوال اليوم</label>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">إرسال الاستبيان / Submit Survey</button>
+            <button type="submit" class="btn-submit">إرسال الاستبيان</button>
         </form>
 
         <!-- Thank You Section -->
         <div id="thankYouSection" class="thank-you-box" style="display: none;">
             <h2>شكراً لمشاركتك! 🎉</h2>
             <p>تم حفظ بياناتك بنجاح للمساهمة في هذا البحث العلمي.</p>
-            <p style="color: #7f8c8d;">Your data has been saved successfully. Thank you for your contribution!</p>
             <button onclick="location.reload()" class="btn-primary" style="margin-top: 20px;">تعبئة استبيان جديد</button>
         </div>
     </div>
